@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 
+MODEL = 'svm'
 MODEL_NAME = 'Support-Vector Machine'
 GENRE_NAMES = ['country', 'pop', 'rock']
 
@@ -15,6 +16,8 @@ def list_genres(genre_list):
     return output_string
 
 st.title('GenreGuesser')
+
+st.markdown()
 
 intro_text = f'''
                 This app connects to a Google Cloud API hosting a {MODEL_NAME} model trained on thousands of songs
@@ -36,6 +39,12 @@ def write_probabilities(input_results):
     labeled_probabilities = list(zip(genres, probabilities))
     labeled_probabilities.sort(reverse = True, key = lambda x : x[1])
     st.markdown('### Probability of Each Genre:')
+    if MODEL == 'svm':
+        st.markdown('''
+            _Note: Because of the way probabilities are calculated with `scikit-learn`'s Support Vector Machine models,
+            there is a chance that the predicted genre is not the same as the genre with the highest assigned
+            probability. See [here](https://scikit-learn.org/stable/modules/svm.html#scores-probabilities) for an explanation._
+            ''')
     md_table = '| Genre | Probability |\n|----|----|'
     for genre, proba in labeled_probabilities:
         md_table += f'\n| {genre.capitalize()} | {round(proba * 100, 1)}% |'
