@@ -34,3 +34,5 @@ if lyrics != '':
     gg_results = requests.get(url, params = params).json()
     write_prediction(gg_results)
     write_probabilities(gg_results)
+
+st.write('This is a test of CI/CD/')
