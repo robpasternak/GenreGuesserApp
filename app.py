@@ -1,10 +1,29 @@
 import streamlit as st
 import requests
-import numpy as np
 
-'''
-# GenreGuesser
-'''
+MODEL_NAME = 'Support-Vector Machine'
+GENRE_NAMES = ['country', 'pop', 'rock']
+
+def list_genres(genre_list):
+    output_string = ''
+    for index, genre in enumerate(genre_list):
+        output_string += f'**{genre}**'
+        if index == len(GENRE_NAMES) - 2:
+            output_string += ', and '
+        elif index < len(GENRE_NAMES) - 2:
+            output_string += ', '
+    return output_string
+
+st.title('GenreGuesser')
+
+intro_text = f'''
+                This app connects to a Google Cloud API hosting a {MODEL_NAME} model trained on thousands of songs
+                classified into {len(GENRE_NAMES)} genres: {list_genres(GENRE_NAMES)}. In the text box below,
+                put in the lyrics for a song from one of these genres, and see if we guess the genre correctly!
+                '''
+
+st.markdown(intro_text)
+
 url = 'https://genre-guesser-2cfzxdapea-ew.a.run.app/predict_svm'
 def write_prediction(input_results):
     predicted_genre = input_results['genre']
@@ -16,13 +35,13 @@ def write_probabilities(input_results):
     probabilities = [pred_proba[genre] for genre in genres]
     labeled_probabilities = list(zip(genres, probabilities))
     labeled_probabilities.sort(reverse = True, key = lambda x : x[1])
-    st.markdown('### Predicted Probabilities by Genre:')
+    st.markdown('### Probability of Each Genre:')
     md_table = '| Genre | Probability |\n|----|----|'
     for genre, proba in labeled_probabilities:
-        md_table += f'\n| {genre.capitalize()} | {round(proba, 3)} |'
+        md_table += f'\n| {genre.capitalize()} | {round(proba * 100, 1)}% |'
     st.markdown(md_table)
 
-lyrics = st.text_area(label = 'Lyrics to guess',
+lyrics = st.text_area(label = '',
                       value = '',
                       height = 250)
 
