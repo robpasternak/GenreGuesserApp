@@ -5,9 +5,6 @@ import numpy as np
 '''
 # GenreGuesser
 '''
-
-st.write('This is a test of CI/CD blah blah blah')
-
 url = 'https://genre-guesser-2cfzxdapea-ew.a.run.app/predict_svm'
 def write_prediction(input_results):
     predicted_genre = input_results['genre']
