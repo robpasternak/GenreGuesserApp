@@ -17,8 +17,6 @@ def list_genres(genre_list):
 
 st.title('GenreGuesser')
 
-st.markdown()
-
 intro_text = f'''
                 This app connects to a Google Cloud API hosting a {MODEL_NAME} model trained on thousands of songs
                 classified into {len(GENRE_NAMES)} genres: {list_genres(GENRE_NAMES)}. In the text box below,
