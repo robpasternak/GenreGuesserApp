@@ -3,7 +3,7 @@ import requests
 
 MODEL = 'svm'
 MODEL_NAME = 'Support-Vector Machine'
-GENRE_NAMES = ['country', 'pop', 'rap']
+GENRE_NAMES = ['country', 'pop', 'rap', 'rock']
 
 def list_genres(genre_list):
     output_string = ''
@@ -18,7 +18,7 @@ def list_genres(genre_list):
 st.title('_GenreGuesser_')
 
 intro_text = f'''
-                This app connects to a Google Cloud API hosting a {MODEL_NAME} model trained on thousands of songs
+                This app connects to a cloud-hosted machine-learning model trained on the lyrics of thousands of songs
                 classified into {len(GENRE_NAMES)} genres: {list_genres(GENRE_NAMES)}. In the text box below,
                 put in the lyrics for a song from one of these genres, and see if we guess the genre correctly!
                 '''
@@ -45,12 +45,12 @@ def write_probabilities(input_results):
         st.markdown('''
             &nbsp;
 
-            _Note: Because of the way probabilities are calculated with `scikit-learn`'s Support-Vector Machine models,
+            _Note: Because of the way probabilities are calculated with this particular model,
             there is a chance that the predicted genre is not the same as the genre with the highest assigned
             probability. See [here](https://scikit-learn.org/stable/modules/svm.html#scores-probabilities) for an explanation._
             ''')
 
-lyrics = st.text_area(label = '',
+lyrics = st.text_area(label = 'Enter lyrics here, then press Ctrl + Enter:',
                       value = '',
                       height = 250)
 
