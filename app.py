@@ -7,7 +7,7 @@ MODEL = 'svm'
 MODEL_NAME = 'Support-Vector Machine'
 GENRE_NAMES = ['country', 'pop', 'rap', 'rock']
 
-model = joblib.load('svm.joblib')
+#model = joblib.load('svm.joblib')
 
 def list_genres(genre_list):
     output_string = ''
@@ -58,22 +58,22 @@ lyrics = st.text_area(label = 'Enter lyrics here, then press Ctrl + Enter:',
                       value = '',
                       height = 250)
 
-#if lyrics != '':
-#    params = {
-#        'lyrics' : lyrics,
-#    }
-#    gg_results = requests.get(url, params = params).json()
-#    write_prediction(gg_results)
-#    write_probabilities(gg_results)
-
-if lyrics!= '':
-    predicted_genre = model.predict(pd.Series([lyrics]))[0]
-    predicted_probas = model.predict_proba(pd.Series([lyrics]))
-    proba_classes = model.classes_
-    output_dict = {}
-    for index, genre in enumerate(proba_classes):
-        output_dict[genre] = predicted_probas[0,index]
-    gg_results = {'genre' : predicted_genre,
-                  'proba' : output_dict}
+if lyrics != '':
+    params = {
+        'lyrics' : lyrics,
+    }
+    gg_results = requests.get(url, params = params).json()
     write_prediction(gg_results)
     write_probabilities(gg_results)
+
+#if lyrics!= '':
+#    predicted_genre = model.predict(pd.Series([lyrics]))[0]
+#    predicted_probas = model.predict_proba(pd.Series([lyrics]))
+#    proba_classes = model.classes_
+#    output_dict = {}
+#    for index, genre in enumerate(proba_classes):
+#        output_dict[genre] = predicted_probas[0,index]
+#    gg_results = {'genre' : predicted_genre,
+#                  'proba' : output_dict}
+#    write_prediction(gg_results)
+#    write_probabilities(gg_results)
