@@ -1,8 +1,6 @@
 streamlit
 pandas
 joblib
-re
-string
 nltk
 sklearn
 imblearn
